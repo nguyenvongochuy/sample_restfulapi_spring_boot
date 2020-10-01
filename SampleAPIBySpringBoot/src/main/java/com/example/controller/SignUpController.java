@@ -28,4 +28,5 @@ public class SignUpController {
 		response.setUserEmail(requestData.getEmail());
 		return response;
 	}
+	
 }

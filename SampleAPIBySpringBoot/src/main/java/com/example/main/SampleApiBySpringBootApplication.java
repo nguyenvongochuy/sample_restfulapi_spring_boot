@@ -36,7 +36,7 @@ public class SampleApiBySpringBootApplication {
 	@Bean
 	public MessageSource messageSource() { 
 	     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-	     messageSource.setBasename("resources/messages.properties");
+	     messageSource.setBasename("/SampleAPIBySpringBoot/src/main/resources/messages.properties");
 	     return messageSource;
 	}
 	
@@ -51,6 +51,7 @@ public class SampleApiBySpringBootApplication {
 				.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/signin").permitAll()
+				.antMatchers(HttpMethod.POST, "/signup").permitAll()
 				.anyRequest().authenticated();
 		}
 	}

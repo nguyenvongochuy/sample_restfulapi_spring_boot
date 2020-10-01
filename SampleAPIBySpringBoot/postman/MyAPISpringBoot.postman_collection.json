@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "53911ef6-478e-46a6-9959-7e3f13a93afa",
+		"name": "MyAPISpringBoot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SignUp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "41bdccaf-bfe5-4c34-b83d-f5d46dac591f",
+						"exec": [
+							"pm.test(\"Test signup\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.json;\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.userEmail).to.eq('test@gmail.com');\r",
+							"    //pm.collectionVariables.set('userEmail',jsonData.userEmail);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\r\n    \t\t\"name\": \"user1\",\r\n    \t\t\"email\": \"test@gmail.com\",\r\n    \t\t\"password\": \"abc123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "45ee716e-b252-45b6-ba1d-f4da366ea850",
+						"exec": [
+							"pm.test(\"Test signin\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.json;\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.token.length).to.gt(100);\r",
+							"    pm.collectionVariables.set('jwtToken',jsonData.token);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"test@gmail.com\",\r\n    \"password\": \"abc123\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b28b5797-785d-4302-903d-e942ba49ee20",
+						"exec": [
+							"pm.test(\"View my Account\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.json;\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.accountNo).to.eq('Acc12345');\r",
+							"    pm.expect(jsonData.accountName).to.eq('John Smith');\r",
+							"    pm.expect(jsonData.balance).to.gt(1000);\r",
+							"   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d8bc52e-3651-40fb-a8d2-94c01a9a37af",
+						"exec": [
+							"pm.test(\"View my Account\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.json;\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.accountNo).to.eq('Acc12345');\r",
+							"    pm.expect(jsonData.accountName).to.eq('Anna Nguyen');\r",
+							"    pm.expect(jsonData.balance).to.eq(9999.99);\r",
+							"   \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{jwtToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountName\": \"Anna Nguyen\",\r\n    \"balance\":\"9999.99\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "98c1e238-4d4a-458a-8c93-57aea45cd71a",
+			"key": "userEmail",
+			"value": ""
+		},
+		{
+			"id": "3f634198-642c-42b4-96e6-4e319c18c74e",
+			"key": "jwtToken",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}

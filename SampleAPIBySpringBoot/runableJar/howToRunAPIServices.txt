@@ -1,0 +1,2 @@
+#Spring boot start tomcat and run API Restful
+java -jar SampleAPIBySpringBoot-0.0.1-SNAPSHOT.jar

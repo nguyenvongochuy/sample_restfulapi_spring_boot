@@ -1,0 +1,4 @@
+install postman:
+
+If run "newman" with command:
+newman run <file.json>
